@@ -10,7 +10,6 @@ void read_command(char cmd[], char *par[])
 	int count = 0, i = 0, j = 0;
 	char *array[100], *pch;
 
-
 	for(;;)
 	{
 		int c =  fgetc(stdin);
@@ -27,16 +26,12 @@ void read_command(char cmd[], char *par[])
 		pch = strtok(NULL, " \n");
 	}
 
-	
 	strcpy(cmd, array[0]);
 	for(int j = 0; j < i; j++){
 		par[j] = array[j];
 		par[i] =  NULL; 
-
 	}
 }
-
-
 
 
 void prompt()
@@ -48,10 +43,9 @@ void prompt()
 		write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
 		first_time  = false;
 	}
-
+	//print '$' for user and print '#' for root promp 
 	printf("myShell-#: "); 
 }
-
 
 
 int main()
@@ -67,10 +61,15 @@ int main()
 
 		if(fork() != 0) {	//it is the parent
 			wait(NULL);  //wait for child
+			//check if it is a fg job
+			//if yes
+			//wait for child to end with wait()
 		}else{
 			strcpy(cmd, "/bin/");
 			strcat(cmd, command);
 			execve(cmd, parameters, envp);
+			// to check if the ecex succeed 
+			// if no, print an error
 		}
 
 		if(strcmp(command, "exit") == 0){break;}	
