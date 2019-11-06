@@ -3,6 +3,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
+#include <unistd.h>
 
 void read_command(char cmd[], char *par[])
 {
@@ -14,8 +15,8 @@ void read_command(char cmd[], char *par[])
 	{
 		int c =  fgetc(stdin);
 		line[count++] = (char) c;
-		if (c == '\n') break;
-
+		if (count == '\n') break;
+	
 	}
 	if(count == 1) return;
 	pch = strtok (line, " \n");
@@ -43,8 +44,19 @@ void prompt()
 		write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
 		first_time  = false;
 	}
-	//print '$' for user and print '#' for root promp 
-	printf("myShell-#: "); 
+	
+	int u  = getuid();
+	//print $ for user and # for root	
+	if(u = 0)
+	{
+		printf("myShell_# ");
+	}
+	else
+	{
+		printf("myShell_$ ");
+	}
+
+
 }
 
 
@@ -58,13 +70,20 @@ int main()
 	while(1){
 		prompt();
 		read_command(command, parameters); 
+		
+		if(fork() < 0)
+		{
+			printf("Fork Failed");
+		}
 
 		if(fork() != 0) {	//it is the parent
+			
 			wait(NULL);  //wait for child
 			//check if it is a fg job
 			//if yes
 			//wait for child to end with wait()
 		}else{
+			//bin is not a right  address
 			strcpy(cmd, "/bin/");
 			strcat(cmd, command);
 			execve(cmd, parameters, envp);
