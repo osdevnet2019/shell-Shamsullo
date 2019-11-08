@@ -20,11 +20,12 @@ void read_command(char *par[], bool isBackground)
     {
         int c =  fgetc(stdin);
         line[count++] = (char) c;
-        if (count == '\n') break;
+        if (c == '\n') break;
 
     }
     
-    if(count == 1) return;
+    //if(count == 1) return;
+    
     char *pch = strtok (line, " \n");
     
     int i = 0;
