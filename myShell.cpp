@@ -91,11 +91,14 @@ int main()
         {
         	wait(NULL);
         }
-        else if(pid > 0 and isBackground){}
+        else if(pid > 0 and isBackground)
+        {
+        	//send to bg
+        }
         else
         {
         	execvp(par[0], par);
-        	fprintf(stderr, "execvp didn't failed\n");
+       
         }
 
 	}
