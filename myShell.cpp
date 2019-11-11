@@ -40,9 +40,10 @@ void read_command(char *par[], bool isBackground)
         	par[i++] = pch;
         }
         pch = strtok(NULL, " \n");
+   	i;
     }
 
-    par[i++] = 0;
+    par[i] = 0;
 
 }
 
